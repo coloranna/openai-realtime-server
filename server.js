@@ -26,7 +26,7 @@ app.get("/session", async (_req, res) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "gpt-4o-realtime-preview",
+        model: "gpt-realtime",
         voice: "verse",
         // Keep responses short for VR; adjust to your preference.
         instructions:

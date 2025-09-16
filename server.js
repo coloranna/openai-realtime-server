@@ -1,23 +1,24 @@
-// server.js - OpenAI Realtime token server
+// server.js - OpenAI Realtime token server for project keys
 import express from "express";
 import fetch from "node-fetch";
 import cors from "cors";
 
 const app = express();
-app.use(cors()); // in production, restrict this to your Netlify domain
+app.use(cors()); // in production, restrict to your Netlify domain
 
-// simple health check
+// Health check
 app.get("/", (req, res) => {
   res.type("text").send("OpenAI Realtime token server. Use /session");
 });
 
-// main endpoint to mint a client session
+// Endpoint to mint a client session
 app.get("/session", async (req, res) => {
   try {
     const r = await fetch("https://api.openai.com/v1/realtime/sessions", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`, // ✅ fixed
+        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,  // sk-proj key
+        "OpenAI-Project": process.env.OPENAI_PROJECT_ID,          // proj_xxx ID
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -41,5 +42,6 @@ app.get("/session", async (req, res) => {
   }
 });
 
+// Port setup
 const port = process.env.PORT || 8787;
 app.listen(port, () => console.log(`Token server running on http://localhost:${port}`));

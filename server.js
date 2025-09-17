@@ -51,7 +51,7 @@ app.post('/tts', async (req, res) => {
     const text = (req.body.text || '').slice(0, 1000);
     const audio = await openai.audio.speech.create({
       model: 'gpt-4o-mini-tts',
-      voice: 'verse',
+      voice: 'echo',
       format: 'mp3',
       input: text
     });
